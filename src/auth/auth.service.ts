@@ -1,6 +1,5 @@
-import { BadRequestException, Body, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { InternalServerErrorException } from '@nestjs/common';
 import { User } from './entities/user.entity';
 import { Model } from 'mongoose';
 import * as bcryptjs from 'bcryptjs';
@@ -103,7 +102,7 @@ export class AuthService {
   async setAdmin(id: string) {
     const user = await this.userModel.findById(id);
     const { ...restBefore } = user.toJSON();
-    if(!user.roles.includes('admin')) {
+    if (!user.roles.includes('admin')) {
       user.roles.push('admin');
     }
     const { password, ...rest } = user.toJSON();

@@ -14,9 +14,6 @@ export class User {
     @Prop({minlength: 6, required: true})
     password?: string;
 
-    @Prop({default: true})
-    isActive: boolean;
-
     @Prop({type:[String], default: ['user']})
     roles: string[];
 
