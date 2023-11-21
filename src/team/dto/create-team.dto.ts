@@ -1,5 +1,4 @@
-import { ArrayMinSize, IsArray, IsString, Length, Matches, Min } from "class-validator";
-import { User } from "src/auth/entities/user.entity";
+import { ArrayMinSize, IsArray, IsString, Length, Matches, MaxLength, Min, MinLength } from "class-validator";
 
 export class CreateTeamDto {
 
@@ -10,7 +9,10 @@ export class CreateTeamDto {
 
     @IsArray()
     @ArrayMinSize(2)
-    users: User[];
+    @IsString({ each: true })
+    @MinLength(24, {each: true})
+    @MaxLength(24, {each: true})
+    users: string[];
 
     @Min(0)
     totalPoints: number;

@@ -1,13 +1,12 @@
 import { Schema, Prop, SchemaFactory } from "@nestjs/mongoose";
-import { User } from "src/auth/entities/user.entity";
 
 @Schema()
 export class Team {
 
     _id?: string;
 
-    @Prop({ type: [User], minlength: 2})
-    users: User[];
+    @Prop({ type: [String], minlength: 2})
+    users: string[];
 
     @Prop({ required: true, unique: true })
     color: string;
