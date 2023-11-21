@@ -3,6 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { TeamModule } from './team/team.module';
+import { TrialModule } from './trial/trial.module';
 
 @Module({
   imports: [
@@ -11,7 +12,8 @@ import { TeamModule } from './team/team.module';
       dbName: process.env.MONGO_DB_NAME
     }),
     AuthModule,
-    TeamModule
+    TeamModule,
+    TrialModule
   ],
   controllers: [],
   providers: [],
