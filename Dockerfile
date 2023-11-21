@@ -1,15 +1,14 @@
-FROM node:20-alpine
+# Use the official Node.js image as the base image
+FROM node:18
 
-WORKDIR /usr/src/app
+# Set the working directory in the container
+WORKDIR /app
 
-COPY package*.json  ./
+# Copy the application files into the working directory
+COPY . /app
 
-RUN npm ci
+# Install the application dependencies
+RUN npm install
 
-COPY . .
-
-RUN npm run build
-
-EXPOSE 3000/tcp
-
-CMD [ "node", "dist/main.js" ]
+# Define the entry point for the container
+CMD ["npm", "start"]
