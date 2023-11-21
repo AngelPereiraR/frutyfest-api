@@ -9,7 +9,7 @@ import { TemporalTeamModule } from './temporal-team/temporal-team.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    MongooseModule.forRoot(process.env.MONGO_ATLAS_URI, {
+    MongooseModule.forRoot(process.env.MONGO_ATLAS_URL, {
       dbName: process.env.MONGO_DB_NAME
     }),
     AuthModule,
