@@ -2,14 +2,14 @@ import { Schema, Prop, SchemaFactory } from "@nestjs/mongoose";
 import { User } from "src/auth/entities/user.entity";
 
 @Schema()
-export class Duo {
+export class Team {
 
     _id?: string;
 
-    @Prop({ type: [User], minlength: 2, maxlength: 2 })
+    @Prop({ type: [User], minlength: 2})
     users: User[];
 
-    @Prop({ minlength: 2, required: true, unique: true })
+    @Prop({ required: true, unique: true })
     color: string;
 
     @Prop({ required: true, min: 0 })
@@ -17,4 +17,4 @@ export class Duo {
 
 }
 
-export const DuoSchema = SchemaFactory.createForClass(Duo);
+export const TeamSchema = SchemaFactory.createForClass(Team);

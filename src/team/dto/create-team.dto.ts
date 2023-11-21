@@ -1,15 +1,15 @@
-import { ArrayMaxSize, ArrayMinSize, IsArray, IsString, Min, MinLength } from "class-validator";
+import { ArrayMinSize, IsArray, IsString, Length, Matches, Min } from "class-validator";
 import { User } from "src/auth/entities/user.entity";
 
-export class CreateDuoDto {
+export class CreateTeamDto {
 
     @IsString()
-    @MinLength(2)
+    @Length(7)
+    @Matches('#[0-9 A-Z]{6}')
     color: string;
 
     @IsArray()
     @ArrayMinSize(2)
-    @ArrayMaxSize(2)
     users: User[];
 
     @Min(0)

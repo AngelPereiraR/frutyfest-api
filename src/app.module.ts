@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
-import { DuoModule } from './duo/duo.module';
+import { TeamModule } from './team/team.module';
 
 @Module({
   imports: [
@@ -11,7 +11,7 @@ import { DuoModule } from './duo/duo.module';
       dbName: process.env.MONGO_DB_NAME
     }),
     AuthModule,
-    DuoModule
+    TeamModule
   ],
   controllers: [],
   providers: [],
