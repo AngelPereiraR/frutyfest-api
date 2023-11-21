@@ -2,14 +2,14 @@
     "version": 2,
     "builds": [
         {
-            "src": "/frutyfest-api/src/main.ts",
+            "src": "./main.ts",
             "use": "@vercel/node"
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "/frutyfest-api/src/main.ts",
+            "dest": "./main.ts",
             "methods": ["GET", "POST", "PUT", "PATCH", "DELETE"]
         }
     ]
