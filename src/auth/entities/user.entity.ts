@@ -17,6 +17,15 @@ export class User {
     @Prop({type:[String], default: ['user']})
     roles: string[];
 
+    @Prop({required: true, default: false})
+    hasCompanion: boolean;
+
+    @Prop({required: true})
+    companionName: string;
+
+    @Prop({required: true})
+    presentation: string;
+
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

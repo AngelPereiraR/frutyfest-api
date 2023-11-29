@@ -8,7 +8,7 @@ export class CreateTeamDto {
     color: string;
 
     @IsArray()
-    @ArrayMinSize(2)
+    @ArrayMinSize(1)
     @IsString({ each: true })
     @MinLength(24, {each: true})
     @MaxLength(24, {each: true})

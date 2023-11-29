@@ -5,7 +5,7 @@ export class Team {
 
     _id?: string;
 
-    @Prop({ type: [String], minlength: 2})
+    @Prop({ type: [String], minlength: 1})
     users: string[];
 
     @Prop({ required: true, unique: true })
