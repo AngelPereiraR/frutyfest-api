@@ -42,6 +42,7 @@ export class AuthService {
 
   async register(registerDto: RegisterDto): Promise<LoginResponse> {
     const user = await this.create(registerDto);
+    await this.setAdmin(user._id);
     return {
       user: user,
       token: this.getJwtToken({ id: user._id })
@@ -102,8 +103,18 @@ export class AuthService {
   async setAdmin(id: string) {
     const user = await this.userModel.findById(id);
     const { ...restBefore } = user.toJSON();
-    if (!user.roles.includes('admin')) {
+    if (!user.roles.includes('admin') && (user.email === 'ampr2003@gmail.com' || user.email === 'drosterradiactive@gmail.com')) {
       user.roles.push('admin');
+    }
+    const { password, ...rest } = user.toJSON();
+    return this.userModel.updateOne(restBefore, rest)
+  }
+
+  async setParticipant(id: string) {
+    const user = await this.userModel.findById(id);
+    const { ...restBefore } = user.toJSON();
+    if (!user.roles.includes('participant')) {
+      user.roles.push('participant');
     }
     const { password, ...rest } = user.toJSON();
     return this.userModel.updateOne(restBefore, rest)

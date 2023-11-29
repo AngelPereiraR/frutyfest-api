@@ -22,8 +22,6 @@ export class AuthController {
   register(@Body() registerDto: RegisterDto) {
     return this.authService.register(registerDto);
   }
-
-  @UseGuards(AuthGuard)
   @Get()
   findAll() {
     return this.authService.findAll();
@@ -60,8 +58,8 @@ export class AuthController {
   }
 
   @UseGuards(AuthGuard)
-  @Patch('/setAdmin/:id')
-  setAdmin(@Param('id') id: string) {
-    return this.authService.setAdmin(id);
+  @Patch('/setParticipant/:id')
+  setParticipant(@Param('id') id: string) {
+    return this.authService.setParticipant(id);
   }
 }
