@@ -54,7 +54,7 @@ export class AuthController {
   @UseGuards(AuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
-    return await this.authService.remove(id);
+    console.log(this.authService.remove(id));
   }
 
   @UseGuards(AuthGuard)
