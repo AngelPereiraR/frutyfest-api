@@ -44,6 +44,7 @@ export class TrialService {
     }
 
     async remove(id: string) {
-        return this.trialModel.findByIdAndRemove(id)
+        const Trial = (await this.findTrialById(id)).toJSON();
+        return this.trialModel.deleteOne(Trial);
     }
 }

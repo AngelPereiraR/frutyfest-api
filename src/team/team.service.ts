@@ -44,6 +44,7 @@ export class TeamService {
     }
 
     async remove(id: string) {
-        return this.teamModel.findByIdAndRemove(id);
+        const Team = (await this.findTeamById(id)).toJSON();
+        return this.teamModel.deleteOne(Team);
     }
 }
