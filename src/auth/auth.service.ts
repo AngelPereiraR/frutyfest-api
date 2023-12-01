@@ -91,7 +91,8 @@ export class AuthService {
   }
 
   async remove(id: string) {
-    return this.userModel.findByIdAndRemove(id);
+    this.userModel.findByIdAndRemove(id);
+    return true;
   }
 
   getJwtToken(payload: JwtPayload) {
