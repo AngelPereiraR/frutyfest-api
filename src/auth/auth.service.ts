@@ -91,7 +91,14 @@ export class AuthService {
   }
 
   async remove(id: string) {
-    return await this.userModel.findByIdAndRemove(id);
+    return await this.userModel.findByIdAndRemove(id, function (err, docs) { 
+      if (err){ 
+          console.log(err) 
+      } 
+      else{ 
+          console.log("Removed User : ", docs); 
+      } 
+  }); 
   }
 
   getJwtToken(payload: JwtPayload) {
