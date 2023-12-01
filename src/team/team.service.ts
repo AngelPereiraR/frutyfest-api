@@ -44,7 +44,6 @@ export class TeamService {
     }
 
     async remove(id: string) {
-        const Team = this.findTeamById(id);
-        return this.teamModel.deleteOne(Team);
+        return this.teamModel.findByIdAndRemove(id);
     }
 }

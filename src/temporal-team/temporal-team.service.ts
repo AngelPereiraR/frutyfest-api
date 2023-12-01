@@ -44,7 +44,6 @@ export class TemporalTeamService {
     }
 
     async remove(id: string) {
-        const TemporalTeam = this.findTemporalTeamById(id);
-        return this.temporalteamModel.deleteOne(TemporalTeam);
+        return this.temporalteamModel.findByIdAndRemove(id)
     }
 }
