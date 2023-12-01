@@ -93,7 +93,7 @@ export class AuthService {
   async remove(id: string) {
     const user = this.findUserById(id);
 
-    return user; 
+    return this.userModel.deleteOne(user); 
   }
 
   getJwtToken(payload: JwtPayload) {
