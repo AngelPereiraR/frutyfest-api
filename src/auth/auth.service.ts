@@ -91,9 +91,10 @@ export class AuthService {
   }
 
   async remove(id: string) {
-    return await this.userModel.findByIdAndRemove(id, function (err, docs) { 
+    return await this.userModel.findByIdAndDelete(id, function (err: any, docs: any) { 
       if (err){ 
           console.log(err) 
+          console.log('Fallo')
       } 
       else{ 
           console.log("Removed User : ", docs); 
