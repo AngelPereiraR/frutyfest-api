@@ -62,4 +62,10 @@ export class AuthController {
   setParticipant(@Param('id') id: string) {
     return this.authService.setParticipant(id);
   }
+
+  @UseGuards(AuthGuard)
+  @Patch('/removeParticipant/:id')
+  removeParticipant(@Param('id') id: string) {
+    return this.authService.removeParticipant(id);
+  }
 }
