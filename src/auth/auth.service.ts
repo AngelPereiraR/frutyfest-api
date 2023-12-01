@@ -91,7 +91,7 @@ export class AuthService {
   }
 
   async remove(id: string) {
-    this.userModel.findByIdAndRemove(id);
+    await this.userModel.findByIdAndRemove(id);
     return true;
   }
 
