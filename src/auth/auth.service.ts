@@ -92,7 +92,6 @@ export class AuthService {
 
   async remove(id: string) {
     const user = this.findUserById(id);
-    console.log(user)
 
     return user; 
   }
