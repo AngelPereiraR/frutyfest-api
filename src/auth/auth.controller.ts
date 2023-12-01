@@ -54,7 +54,7 @@ export class AuthController {
   @UseGuards(AuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
-    this.authService.remove(id);
+    return this.authService.remove(id);
   }
 
   @UseGuards(AuthGuard)
