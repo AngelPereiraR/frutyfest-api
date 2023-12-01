@@ -51,7 +51,6 @@ export class AuthController {
     return this.authService.update(id, updateAuthDto);
   }
 
-  @UseGuards(AuthGuard)
   @Delete(':id')
   async remove(@Param('id') id: string) {
     return await this.authService.remove(id);
