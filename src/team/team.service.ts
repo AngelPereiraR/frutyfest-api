@@ -23,7 +23,10 @@ export class TeamService {
 
             return await newTeam.save();
         } catch (error) {
-            throw new Error(error)
+            if (error.code === 11000) {
+                throw new BadRequestException(`${createTeamDto.users} already asignated!`)
+            }
+            throw new InternalServerErrorException('Something terrible happen!!!')
         }
     }
 
