@@ -5,7 +5,7 @@ export class CreateTemporalTeamDto {
 
     @IsString()
     @Length(7)
-    @Matches('#[0-9 A-Z]{6}')
+    @Matches('#[0-9 A-Z a-z]{6}')
     color: string;
 
     @IsArray()
