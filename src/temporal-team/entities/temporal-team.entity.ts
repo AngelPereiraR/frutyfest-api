@@ -9,7 +9,7 @@ export class TemporalTeam {
     @Prop({ type: [Team], minlength: 1})
     teams: Team[];
 
-    @Prop({ required: true, unique: true })
+    @Prop({ required: true })
     color: string;
 
 }
