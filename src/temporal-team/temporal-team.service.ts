@@ -24,7 +24,7 @@ export class TemporalTeamService {
             return await newTemporalTeam.save();
         } catch (error) {
             if (error.code === 11000) {
-                throw new BadRequestException(`${createTemporalTeamDto.teams} already asignated!`)
+                throw new BadRequestException(`Team/s already asignated!`)
             }
             throw new InternalServerErrorException('Something terrible happen!!!')
         }
