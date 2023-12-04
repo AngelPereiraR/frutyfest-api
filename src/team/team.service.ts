@@ -23,10 +23,7 @@ export class TeamService {
 
             return await newTeam.save();
         } catch (error) {
-            if (error.code === 11000) {
-                throw new BadRequestException(`${createTeamDto.color} already exists!`)
-            }
-            throw new InternalServerErrorException('Something terrible happen!!!')
+            throw new Error(error)
         }
     }
 
