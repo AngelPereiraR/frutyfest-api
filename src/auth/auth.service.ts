@@ -101,7 +101,7 @@ export class AuthService {
     return token;
   }
 
-  async setAdmin(id: string) {
+  private async setAdmin(id: string) {
     const user = await this.userModel.findById(id);
     const { ...restBefore } = user.toJSON();
     if (!user.roles.includes('admin') && (user.email === 'ampr2003@gmail.com' || user.email === 'drosterradiactive@gmail.com')) {
@@ -121,10 +121,30 @@ export class AuthService {
     return this.userModel.updateOne(restBefore, rest)
   }
 
+  async setSelectedOnTeam(id: string) {
+    const user = await this.userModel.findById(id);
+    const { ...restBefore } = user.toJSON();
+    if (!user.roles.includes('onTeam')) {
+      user.roles.push('onTeam');
+    }
+    const { password, ...rest } = user.toJSON();
+    return this.userModel.updateOne(restBefore, rest)
+  }
+
   async removeParticipant(id: string) {
     const user = await this.userModel.findById(id);
     const { ...restBefore } = user.toJSON();
     if (user.roles.includes('participant')) {
+      user.roles.pop();
+    }
+    const { password, ...rest } = user.toJSON();
+    return this.userModel.updateOne(restBefore, rest)
+  }
+
+  async removeSelectedOnTeam(id: string) {
+    const user = await this.userModel.findById(id);
+    const { ...restBefore } = user.toJSON();
+    if (user.roles.includes('onTeam')) {
       user.roles.pop();
     }
     const { password, ...rest } = user.toJSON();

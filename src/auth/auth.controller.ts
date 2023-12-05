@@ -68,4 +68,16 @@ export class AuthController {
   removeParticipant(@Param('id') id: string) {
     return this.authService.removeParticipant(id);
   }
+
+  @UseGuards(AuthGuard)
+  @Patch('/setSelectedOnTeam/:id')
+  setSelectedOnTeam(@Param('id') id: string) {
+    return this.authService.setSelectedOnTeam(id);
+  }
+
+  @UseGuards(AuthGuard)
+  @Patch('/removeSelectedOnTeam/:id')
+  removeSelectedOnTeam(@Param('id') id: string) {
+    return this.authService.removeSelectedOnTeam(id);
+  }
 }
