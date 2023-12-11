@@ -15,6 +15,9 @@ export class Team {
     @Prop({ required: true, min: 0 })
     totalPoints: number;
 
+    @Prop({type:[String], default: []})
+    roles: string[];
+
 }
 
 export const TeamSchema = SchemaFactory.createForClass(Team);
