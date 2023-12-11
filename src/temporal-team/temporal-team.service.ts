@@ -26,7 +26,7 @@ export class TemporalTeamService {
             if (error.code === 11000) {
                 throw new BadRequestException(`Team/s already asignated!`)
             }
-            throw new InternalServerErrorException('Something terrible happen!!!')
+            throw new Error(error)
         }
     }
 
