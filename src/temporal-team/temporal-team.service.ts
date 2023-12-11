@@ -15,6 +15,7 @@ export class TemporalTeamService {
     }
 
     async create(createTemporalTeamDto: CreateTemporalTeamDto) {
+        throw createTemporalTeamDto;
         try {
             const newTemporalTeam = new this.temporalteamModel({
                 ...createTemporalTeamDto
