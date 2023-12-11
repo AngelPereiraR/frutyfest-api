@@ -15,19 +15,21 @@ export class TemporalTeamService {
     }
 
     async create(createTemporalTeamDto: CreateTemporalTeamDto) {
-        try {
-            const newTemporalTeam = new this.temporalteamModel({
-                ...createTemporalTeamDto
-            }
-            );
+        // try {
+            
+        // } catch (error) {
+        //     if (error.code === 11000) {
+        //         throw new BadRequestException(`Team/s already asignated!`)
+        //     }
+        //     throw new InternalServerErrorException('Something terrible happen!!!')
+        // }
 
-            return await newTemporalTeam.save();
-        } catch (error) {
-            if (error.code === 11000) {
-                throw new BadRequestException(`Team/s already asignated!`)
-            }
-            throw new InternalServerErrorException('Something terrible happen!!!')
+        const newTemporalTeam = new this.temporalteamModel({
+            ...createTemporalTeamDto
         }
+        );
+
+        return await newTemporalTeam.save();
     }
 
     findAll(): Promise<TemporalTeam[]> {
