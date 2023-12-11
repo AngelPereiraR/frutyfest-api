@@ -6,10 +6,10 @@ export class TemporalTeam {
 
     _id?: string;
 
-    @Prop({ type: [Team], minlength: 1})
-    teams: Team[];
+    @Prop({ type: [String], minlength: 1})
+    teams: string[];
 
-    @Prop({ required: true })
+    @Prop({ required: true, unique: true })
     color: string;
 
 }

@@ -1,4 +1,4 @@
-import { ArrayMinSize, IsArray, IsObject, IsString, Length, Matches } from "class-validator";
+import { ArrayMinSize, IsArray, IsString, Length, Matches } from "class-validator";
 import { Team } from "src/team/entities/team.entity";
 
 export class CreateTemporalTeamDto {
@@ -10,6 +10,6 @@ export class CreateTemporalTeamDto {
 
     @IsArray()
     @ArrayMinSize(1)
-    @IsObject({ each: true })
-    teams: Team[];
+    @IsString({ each: true })
+    teams: string[];
 }

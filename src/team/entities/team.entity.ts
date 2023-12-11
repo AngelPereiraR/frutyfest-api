@@ -9,7 +9,7 @@ export class Team {
     @Prop({ type: [User], minlength: 1})
     users: User[];
 
-    @Prop({ required: true })
+    @Prop({ required: true, unique: true })
     color: string;
 
     @Prop({ required: true, min: 0 })
