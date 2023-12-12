@@ -49,20 +49,22 @@ export class TeamService {
     }
 
     async setSelectedOnTemporal(id: string) {
-        const teamBefore = await this.findTeamById(id);
-        const teamAfter = teamBefore
-        if (!teamAfter.roles.includes('onTeam')) {
-            teamAfter.roles.push('onTeam');
+        const team = await this.findTeamById(id)
+        const { ...restBefore } = team.toJSON();
+        if (!team.roles.includes('onTeam')) {
+            team.roles.push('onTeam');
         }
-        return this.teamModel.updateOne(teamBefore.toJSON(), teamAfter.toJSON())
+        const { ...rest } = team.toJSON();
+        return this.teamModel.updateOne(restBefore, rest)
     }
 
     async removeSelectedOnTemporal(id: string) {
-        const teamBefore = await this.findTeamById(id);
-        const teamAfter = teamBefore
-        if (teamAfter.roles.includes('onTeam')) {
-            teamAfter.roles.pop();
+        const team = await this.findTeamById(id)
+        const { ...restBefore } = team.toJSON();
+        if (team.roles.includes('onTeam')) {
+            team.roles.pop();
         }
-        return this.teamModel.updateOne(teamBefore.toJSON(), teamAfter.toJSON())
+        const { ...rest } = team.toJSON();
+        return this.teamModel.updateOne(restBefore, rest)
     }
 }
