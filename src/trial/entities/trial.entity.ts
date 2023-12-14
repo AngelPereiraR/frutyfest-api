@@ -4,7 +4,7 @@ export class Trial {
 
     _id?: string;
 
-    @Prop({ required: true, unique: true })
+    @Prop({ required: true })
     name: string;
 
     @Prop({ required: true, min: 1 })
