@@ -29,7 +29,7 @@ export class AuthService {
         clientId: `${process.env.CLIENTID}`,
         clientSecret: `${process.env.CLIENTSECRET}`,
         refreshToken: `${process.env.REFRESHTOKEN}`,
-        accessToken: `Bearer ${process.env.ACCESSTOKEN}`,
+        accessToken: `${process.env.ACCESSTOKEN}`,
         expires: 1484314697598,
       },
     })
