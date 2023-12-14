@@ -45,7 +45,9 @@ export class AuthService {
       },
     };
 
-    return await transporter.sendMail(mailOptions);
+    return await new Promise((resolve, reject) => {
+      transporter.sendMail(mailOptions);
+    })
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
