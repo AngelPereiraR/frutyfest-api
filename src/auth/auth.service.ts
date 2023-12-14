@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User } from './entities/user.entity';
 import { Model } from 'mongoose';
 import * as bcryptjs from 'bcryptjs';
+import * as nodemailer from 'nodemailer';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './interfaces/jwt-payload';
 import { LoginResponse } from './interfaces/login-response';
@@ -14,8 +15,31 @@ export class AuthService {
   constructor(
     @InjectModel(User.name)
     private userModel: Model<User>,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false,
+      auth: {
+        user: `${process.env.EMAIL}`,
+        pass: `${process.env.EMAIL_PASSWORD}`,
+      },
+      tls: {
+        rejectUnauthorized: false, 
+      },
+    })
   ) { }
+
+  async sendEmail(to: string, subject: string, text: string) {
+    const mailOptions = {
+      from: `${process.env.EMAIL}`,
+      to,
+      subject,
+      text,
+    };
+
+    return await this.transporter.sendMail(mailOptions);
+  }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
 
@@ -28,8 +52,10 @@ export class AuthService {
       }
       );
 
+      await this.sendEmail(userData.email, "Credenciales del registro en FrutyFest", `Bienvenid@ ${userData.name}, tus credenciales son las siguientes:\n\nUsuario: ${userData.email}\n\nContraseña: ${password}\n\n\nEstás pendiente de ser seleccionado como uno de los participantes del FrutyFest`);
       await newUser.save();
       const { password: _, ...user } = newUser.toJSON();
+
 
       return user;
     } catch (error) {
@@ -93,7 +119,7 @@ export class AuthService {
   async remove(id: string) {
     const user = await this.findUserById(id);
 
-    return this.userModel.deleteOne(user); 
+    return this.userModel.deleteOne(user);
   }
 
   getJwtToken(payload: JwtPayload) {
