@@ -35,7 +35,7 @@ export class AuthService {
     })
 
     const mailOptions = {
-      from: `ampr2003@gmail.com`,
+      from: `${process.env.USER}`,
       to,
       subject,
       text,
@@ -44,8 +44,6 @@ export class AuthService {
         password,
       },
     };
-
-    console.log(mailOptions)
 
     return await transporter.sendMail(mailOptions);
   }
@@ -61,7 +59,7 @@ export class AuthService {
       }
       );
 
-      await this.sendEmail(userData.email, "Credenciales del registro en FrutyFest", `Bienvenid@ ${userData.name}, tus credenciales son las siguientes:\n\nUsuario: ${userData.email}\n\nContraseña: ${password}\n\n\nEstás pendiente de ser seleccionado como uno de los participantes del FrutyFest`, userData.name, password);
+      await this.sendEmail(userData.email, "Credenciales del registro en FrutyFest", `Bienvenid@ ${userData.name}, tus credenciales son las siguientes: Usuario: ${userData.email} Contraseña: ${password} Estás pendiente de ser seleccionado como uno de los participantes del FrutyFest`, userData.name, password);
       await newUser.save();
       const { password: _, ...user } = newUser.toJSON();
 
