@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { User } from './entities/user.entity';
 import { Model } from 'mongoose';
 import * as bcryptjs from 'bcryptjs';
-import * as nodemailer from 'nodemailer';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './interfaces/jwt-payload';
 import { LoginResponse } from './interfaces/login-response';
@@ -11,34 +10,44 @@ import { CreateUserDto, RegisterDto, LoginDto, UpdateAuthDto } from './dto';
 
 @Injectable()
 export class AuthService {
+  private nodemailer = require("nodemailer");
 
   constructor(
     @InjectModel(User.name)
     private userModel: Model<User>,
     private jwtService: JwtService,
-    private transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 587,
-      secure: false,
-      auth: {
-        user: `${process.env.EMAIL}`,
-        pass: `${process.env.EMAIL_PASSWORD}`,
-      },
-      tls: {
-        rejectUnauthorized: false, 
-      },
-    })
   ) { }
 
-  async sendEmail(to: string, subject: string, text: string) {
+  async sendEmail(to: string, subject: string, text: string, username: string, password: string) {
+    const transporter = this.nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: {
+        type: 'OAuth2',
+        user: `${process.env.USER}`,
+        clientId: `${process.env.CLIENTID}`,
+        clientSecret: `${process.env.CLIENTSECRET}`,
+        refreshToken: `${process.env.REFRESHTOKEN}`,
+        accessToken: `Bearer ${process.env.ACCESSTOKEN}`,
+        expires: 1484314697598,
+      },
+    })
+
     const mailOptions = {
-      from: `${process.env.EMAIL}`,
+      from: `ampr2003@gmail.com`,
       to,
       subject,
       text,
+      context: {
+        username,
+        password,
+      },
     };
 
-    return await this.transporter.sendMail(mailOptions);
+    console.log(mailOptions)
+
+    return await transporter.sendMail(mailOptions);
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
@@ -52,7 +61,7 @@ export class AuthService {
       }
       );
 
-      await this.sendEmail(userData.email, "Credenciales del registro en FrutyFest", `Bienvenid@ ${userData.name}, tus credenciales son las siguientes:\n\nUsuario: ${userData.email}\n\nContraseña: ${password}\n\n\nEstás pendiente de ser seleccionado como uno de los participantes del FrutyFest`);
+      await this.sendEmail(userData.email, "Credenciales del registro en FrutyFest", `Bienvenid@ ${userData.name}, tus credenciales son las siguientes:\n\nUsuario: ${userData.email}\n\nContraseña: ${password}\n\n\nEstás pendiente de ser seleccionado como uno de los participantes del FrutyFest`, userData.name, password);
       await newUser.save();
       const { password: _, ...user } = newUser.toJSON();
 
@@ -62,7 +71,7 @@ export class AuthService {
       if (error.code === 11000) {
         throw new BadRequestException(`${createUserDto.email} already exists!`)
       }
-      throw new InternalServerErrorException('Something terrible happen!!!')
+      throw new InternalServerErrorException(error)
     }
   }
 
