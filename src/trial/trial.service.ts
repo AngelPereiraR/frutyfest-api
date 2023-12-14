@@ -24,7 +24,7 @@ export class TrialService {
             return await newTrial.save();
         } catch (error) {
             if (error.code === 11000) {
-                throw new BadRequestException(`${createTrialDto.name} already exists!`)
+                throw new BadRequestException(`${error} already exists!`)
             }
             throw new InternalServerErrorException('Something terrible happen!!!')
         }
