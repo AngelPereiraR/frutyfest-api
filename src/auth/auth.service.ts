@@ -81,10 +81,6 @@ export class AuthService {
         })
       });
 
-      console.log(request.json())
-      console.log(request.text())
-      console.log(request.status)
-
 
       // await this.sendEmail(userData.email, "Credenciales del registro en FrutyFest", `<h1>Bienvenid@ ${userData.name}, tus credenciales son las siguientes:</h1><p>Usuario: ${userData.email}</p><p>Contraseña: ${password}</p><p>Estás pendiente de ser seleccionado como uno de los participantes del FrutyFest</p>`);
       await newUser.save();
