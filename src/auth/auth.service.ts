@@ -26,7 +26,7 @@ export class AuthService {
     this.mailService.setApiKey(this.apiKey);
   }
 
-  
+
   async sendEmail(to: string, subject: string, htmlContent: string): Promise<void> {
     const msg = {
       to,
@@ -51,36 +51,40 @@ export class AuthService {
 
       const email = userData.email;
 
-      await fetch(this.SENDGRID_API, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`
-            },
-            body: JSON.stringify({
-              personalizations: [
+      const request = await fetch(this.SENDGRID_API, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`
+        },
+        body: JSON.stringify({
+          personalizations: [
+            {
+              to: [
                 {
-                  to: [
-                    {
-                      email
-                    }
-                  ],
-                  subject: "Credenciales del registro en FrutyFest"
+                  email
                 }
               ],
-              from: {
-                email: 'angelpereira.info@gmail.com',
-                name: 'Test SendGrid'
-              },
-              content: [
-                {
-                  type: 'text/html',
-                  value: `<h1>Bienvenid@ ${userData.name}, tus credenciales son las siguientes:</h1><p>Usuario: ${userData.email}</p><p>Contraseña: ${password}</p><p>Estás pendiente de ser seleccionado como uno de los participantes del FrutyFest</p>`
-                }
-              ]
-            })
-        });
-    
+              subject: "Credenciales del registro en FrutyFest"
+            }
+          ],
+          from: {
+            email: 'angelpereira.info@gmail.com',
+            name: 'Test SendGrid'
+          },
+          content: [
+            {
+              type: 'text/html',
+              value: `<h1>Bienvenid@ ${userData.name}, tus credenciales son las siguientes:</h1><p>Usuario: ${userData.email}</p><p>Contraseña: ${password}</p><p>Estás pendiente de ser seleccionado como uno de los participantes del FrutyFest</p>`
+            }
+          ]
+        })
+      });
+
+      console.log(request.json)
+      console.log(request.text)
+      console.log(request.status)
+
 
       // await this.sendEmail(userData.email, "Credenciales del registro en FrutyFest", `<h1>Bienvenid@ ${userData.name}, tus credenciales son las siguientes:</h1><p>Usuario: ${userData.email}</p><p>Contraseña: ${password}</p><p>Estás pendiente de ser seleccionado como uno de los participantes del FrutyFest</p>`);
       await newUser.save();
