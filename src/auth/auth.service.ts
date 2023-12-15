@@ -81,8 +81,8 @@ export class AuthService {
         })
       });
 
-      console.log(request.json)
-      console.log(request.text)
+      console.log(request.json())
+      console.log(request.text())
       console.log(request.status)
 
 
