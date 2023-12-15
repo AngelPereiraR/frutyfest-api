@@ -7,47 +7,32 @@ import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './interfaces/jwt-payload';
 import { LoginResponse } from './interfaces/login-response';
 import { CreateUserDto, RegisterDto, LoginDto, UpdateAuthDto } from './dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
-  private nodemailer = require("nodemailer");
+  private mailService = require("@sendgrid/mail");
+  private readonly apiKey: string;
 
   constructor(
     @InjectModel(User.name)
     private userModel: Model<User>,
     private jwtService: JwtService,
-  ) { }
+    private readonly configService: ConfigService,
+  ) {
+    this.apiKey = this.configService.get<string>('SENDGRID_API_KEY');
+    this.mailService.setApiKey(this.apiKey);
+  }
 
-  async sendEmail(to: string, subject: string, text: string, username: string, password: string) {
-    const transporter = this.nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true,
-      auth: {
-        type: 'OAuth2',
-        user: `${process.env.USER}`,
-        clientId: `${process.env.CLIENTID}`,
-        clientSecret: `${process.env.CLIENTSECRET}`,
-        refreshToken: `${process.env.REFRESHTOKEN}`,
-        accessToken: `${process.env.ACCESSTOKEN}`,
-        expires: 1484314697598,
-      },
-    })
-
-    const mailOptions = {
-      from: `${process.env.USER}`,
+  async sendEmail(to: string, subject: string, htmlContent: string): Promise<void> {
+    const msg = {
       to,
+      from: 'angelpereira.info@gmail.com', // Cambia esto por tu dirección de correo
       subject,
-      text,
-      context: {
-        username,
-        password,
-      },
+      html: htmlContent,
     };
 
-    return await new Promise((resolve, reject) => {
-      transporter.sendMail(mailOptions);
-    })
+    await this.mailService.send(msg);
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
@@ -61,7 +46,7 @@ export class AuthService {
       }
       );
 
-      await this.sendEmail(userData.email, "Credenciales del registro en FrutyFest", `Bienvenid@ ${userData.name}, tus credenciales son las siguientes: Usuario: ${userData.email} Contraseña: ${password} Estás pendiente de ser seleccionado como uno de los participantes del FrutyFest`, userData.name, password);
+      await this.sendEmail(userData.email, "Credenciales del registro en FrutyFest", `<h1>Bienvenid@ ${userData.name}, tus credenciales son las siguientes:</h1><p>Usuario: ${userData.email}</p><p>Contraseña: ${password}</p><p>Estás pendiente de ser seleccionado como uno de los participantes del FrutyFest</p>`);
       await newUser.save();
       const { password: _, ...user } = newUser.toJSON();
 
