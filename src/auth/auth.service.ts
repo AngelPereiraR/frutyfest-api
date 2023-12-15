@@ -27,7 +27,7 @@ export class AuthService {
   async sendEmail(to: string, subject: string, htmlContent: string): Promise<void> {
     const msg = {
       to,
-      from: 'FrutyFest <no-reply@frutyfest.netlify.app>',
+      from: 'FrutyFest <angelpereira.info@gmail.com>',
       subject,
       html: htmlContent,
     };
