@@ -29,7 +29,7 @@ export class AuthService {
   async sendEmail(to: string, subject: string, htmlContent: string): Promise<void> {
     const msg = {
       to,
-      from: 'angelpereira.info@gmail.com', // Cambia esto por tu dirección de correo
+      from: 'FrutyFest <angelpereira.info@gmail.com>',
       subject,
       html: htmlContent,
     };
@@ -53,7 +53,7 @@ export class AuthService {
       }
       );
 
-      await this.sendEmail(userData.email, "Credenciales del registro en FrutyFest", `<h1>Bienvenid@ ${userData.name}, tus credenciales son las siguientes:</h1><p>Usuario: ${userData.email}</p><p>Contraseña: ${password}</p><p>Estás pendiente de ser seleccionado como uno de los participantes del FrutyFest</p>`);
+      await this.sendEmail(userData.email, "Credenciales del registro en FrutyFest", `<h3>Bienvenid@ ${userData.name}, tus credenciales son las siguientes:</h3>\n\n<p>Usuario: ${userData.email}</p>\n<p>Contraseña: ${password}</p>\n\n\n<p>Estás pendiente de ser seleccionado como uno de los participantes del FrutyFest</p>`);
       await newUser.save();
       const { password: _, ...user } = newUser.toJSON();
 
@@ -63,7 +63,7 @@ export class AuthService {
       if (error.code === 11000) {
         throw new BadRequestException(`${createUserDto.email} already exists!`)
       }
-      throw new InternalServerErrorException(error)
+      throw new InternalServerErrorException('Something terrible happen!!!')
     }
   }
 
