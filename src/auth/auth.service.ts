@@ -8,11 +8,13 @@ import { JwtPayload } from './interfaces/jwt-payload';
 import { LoginResponse } from './interfaces/login-response';
 import { CreateUserDto, RegisterDto, LoginDto, UpdateAuthDto } from './dto';
 import { ConfigService } from '@nestjs/config';
+import fetch from 'node-fetch'
 
 @Injectable()
 export class AuthService {
   private mailService = require("@sendgrid/mail");
   private readonly apiKey: string;
+  private SENDGRID_API = 'https://api.sendgrid.com/v3/mail/send'
 
   constructor(
     @InjectModel(User.name)
@@ -24,6 +26,7 @@ export class AuthService {
     this.mailService.setApiKey(this.apiKey);
   }
 
+  
   async sendEmail(to: string, subject: string, htmlContent: string): Promise<void> {
     const msg = {
       to,
@@ -46,7 +49,40 @@ export class AuthService {
       }
       );
 
-      await this.sendEmail(userData.email, "Credenciales del registro en FrutyFest", `<h1>Bienvenid@ ${userData.name}, tus credenciales son las siguientes:</h1><p>Usuario: ${userData.email}</p><p>Contraseña: ${password}</p><p>Estás pendiente de ser seleccionado como uno de los participantes del FrutyFest</p>`);
+      const email = userData.email;
+
+      await fetch(this.SENDGRID_API, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${process.env.SENDGRID_API_KEY}`
+            },
+            body: JSON.stringify({
+              personalizations: [
+                {
+                  to: [
+                    {
+                      email
+                    }
+                  ],
+                  subject: "Credenciales del registro en FrutyFest"
+                }
+              ],
+              from: {
+                email: 'angelpereira.info@gmail.com',
+                name: 'Test SendGrid'
+              },
+              content: [
+                {
+                  type: 'text/html',
+                  value: `<h1>Bienvenid@ ${userData.name}, tus credenciales son las siguientes:</h1><p>Usuario: ${userData.email}</p><p>Contraseña: ${password}</p><p>Estás pendiente de ser seleccionado como uno de los participantes del FrutyFest</p>`
+                }
+              ]
+            })
+        });
+    
+
+      // await this.sendEmail(userData.email, "Credenciales del registro en FrutyFest", `<h1>Bienvenid@ ${userData.name}, tus credenciales son las siguientes:</h1><p>Usuario: ${userData.email}</p><p>Contraseña: ${password}</p><p>Estás pendiente de ser seleccionado como uno de los participantes del FrutyFest</p>`);
       await newUser.save();
       const { password: _, ...user } = newUser.toJSON();
 
