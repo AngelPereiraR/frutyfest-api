@@ -27,7 +27,7 @@ export class AuthService {
   async sendEmail(to: string, subject: string, htmlContent: string): Promise<void> {
     const msg = {
       to,
-      from: 'FrutyFest <frutyfest@noreply.com>',
+      from: 'FrutyFest <no-reply@gmail.com>',
       subject,
       html: htmlContent,
     };
