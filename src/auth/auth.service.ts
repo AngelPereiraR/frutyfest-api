@@ -8,13 +8,11 @@ import { JwtPayload } from './interfaces/jwt-payload';
 import { LoginResponse } from './interfaces/login-response';
 import { CreateUserDto, RegisterDto, LoginDto, UpdateAuthDto } from './dto';
 import { ConfigService } from '@nestjs/config';
-import fetch from 'node-fetch'
 
 @Injectable()
 export class AuthService {
   private client = require("@sendgrid/mail");
   private readonly apiKey: string;
-  private SENDGRID_API = 'https://api.sendgrid.com/v3/mail/send'
 
   constructor(
     @InjectModel(User.name)
@@ -29,7 +27,7 @@ export class AuthService {
   async sendEmail(to: string, subject: string, htmlContent: string): Promise<void> {
     const msg = {
       to,
-      from: 'FrutyFest <angelpereira.info@gmail.com>',
+      from: 'FrutyFest <frutyfest@noreply.com>',
       subject,
       html: htmlContent,
     };
