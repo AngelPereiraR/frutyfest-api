@@ -1,5 +1,4 @@
 import { Schema, Prop, SchemaFactory } from "@nestjs/mongoose";
-import { Team } from "src/team/entities/team.entity";
 import { Trial } from "src/trial/entities/trial.entity";
 
 @Schema()
@@ -14,7 +13,7 @@ export class TemporalTeam {
     color: string;
     
     @Prop({ required: true })
-    gamemode: string;
+    gamemode: Trial;
 
 }
 
