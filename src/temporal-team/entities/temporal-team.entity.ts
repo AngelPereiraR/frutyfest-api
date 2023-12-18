@@ -13,7 +13,7 @@ export class TemporalTeam {
     @Prop({ required: true, unique: true })
     color: string;
     
-    @Prop({ required: true, unique: true })
+    @Prop({ required: true })
     gamemode: string;
 
 }
