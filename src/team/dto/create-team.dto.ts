@@ -13,6 +13,9 @@ export class CreateTeamDto {
     @IsObject({ each: true })
     users: User[];
 
+    @IsString()
+    event: string;
+
     @Min(0)
     totalPoints: number;
 }
