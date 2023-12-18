@@ -59,7 +59,7 @@ export class TrialService {
     async removeTeamAssignated(id: string) {
         const Trial = await this.findTrialById(id)
         const { ...restBefore } = Trial.toJSON();
-        Trial.teamsAssignated -= 1;
+        Trial.teamsAssignated = Trial.teamsAssignated - 1;
         const { ...rest } = Trial.toJSON();
         return this.trialModel.updateOne(restBefore, rest)
     }
