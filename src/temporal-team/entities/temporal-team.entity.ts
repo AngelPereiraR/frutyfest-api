@@ -14,7 +14,7 @@ export class TemporalTeam {
     color: string;
     
     @Prop({ required: true, unique: true })
-    gamemode: Trial;
+    gamemode: string;
 
 }
 

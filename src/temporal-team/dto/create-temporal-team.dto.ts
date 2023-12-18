@@ -1,6 +1,4 @@
-import { ArrayMinSize, IsArray, IsObject, IsString, Length, Matches } from "class-validator";
-import { Team } from "src/team/entities/team.entity";
-import { Trial } from "src/trial/entities/trial.entity";
+import { ArrayMinSize, IsArray, IsString, Length, Matches } from "class-validator";
 
 export class CreateTemporalTeamDto {
 
@@ -14,6 +12,6 @@ export class CreateTemporalTeamDto {
     @IsString({ each: true })
     teams: string[];
 
-    @IsObject()
-    gamemode: Trial
+    @IsString()
+    gamemode: string
 }
