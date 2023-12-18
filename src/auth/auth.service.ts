@@ -110,6 +110,12 @@ export class AuthService {
     return rest;
   }
 
+  async findUserByEmail(email: string) {
+    const user = this.userModel.findOne({ email }).exec();
+    const { password, ...rest } = (await user).toJSON();
+    return rest;
+  }
+
   async update(id: string, updateAuthDto: UpdateAuthDto) {
     const user = this.findUserById(id);
     return this.userModel.updateOne(user, updateAuthDto);
