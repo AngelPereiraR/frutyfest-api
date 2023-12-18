@@ -32,12 +32,12 @@ export class TrialController {
   }
 
   @Patch('/addTeamAssignated/:id')
-  setSelectedOnTeam(@Param('id') id: string) {
+  addTeamAssignated(@Param('id') id: string) {
     return this.trialService.addTeamAssignated(id);
   }
 
   @Patch('/removeTeamAssignated/:id')
-  removeSelectedOnTeam(@Param('id') id: string) {
+  removeTeamAssignated(@Param('id') id: string) {
     return this.trialService.removeTeamAssignated(id);
   }
 }
