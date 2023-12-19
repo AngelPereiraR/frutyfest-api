@@ -51,7 +51,6 @@ export class AuthController {
     return this.authService.findUserByEmail(email);
   }
 
-  @UseGuards(AuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
     return this.authService.update(id, updateAuthDto);
