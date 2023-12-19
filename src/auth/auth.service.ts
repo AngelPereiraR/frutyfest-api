@@ -117,9 +117,10 @@ export class AuthService {
   }
 
   async update(id: string, updateAuthDto: UpdateAuthDto) {
+    const user = await this.findUserById(id);
     await this.sendEmail(updateAuthDto.email, "Nuevas credenciales del registro en FrutyFest", `<h3>Bienvenid@ ${updateAuthDto.name}, tus nuevas credenciales son las siguientes:</h3>\n\n<p>Usuario: ${updateAuthDto.email}</p>\n<p>Contraseña: ${updateAuthDto.password}</p>`);
       
-    return this.userModel.findByIdAndUpdate(id, updateAuthDto);
+    return this.userModel.updateOne(user, updateAuthDto);
   }
 
   async remove(id: string) {
