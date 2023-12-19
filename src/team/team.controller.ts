@@ -30,14 +30,4 @@ export class TeamController {
   remove(@Param('id') id: string) {
     return this.teamService.remove(id);
   }
-
-  @Patch('/setSelectedOnTemporal/:id')
-  setSelectedOnTeam(@Param('id') id: string) {
-    return this.teamService.setSelectedOnTemporal(id);
-  }
-
-  @Patch('/removeSelectedOnTemporal/:id')
-  removeSelectedOnTeam(@Param('id') id: string) {
-    return this.teamService.removeSelectedOnTemporal(id);
-  }
 }

@@ -47,24 +47,4 @@ export class TeamService {
         const Team = (await this.findTeamById(id)).toJSON();
         return this.teamModel.deleteOne(Team);
     }
-
-    async setSelectedOnTemporal(id: string) {
-        const team = await this.findTeamById(id)
-        const { ...restBefore } = team.toJSON();
-        if (!team.roles.includes('onTeam')) {
-            team.roles.push('onTeam');
-        }
-        const { ...rest } = team.toJSON();
-        return this.teamModel.updateOne(restBefore, rest)
-    }
-
-    async removeSelectedOnTemporal(id: string) {
-        const team = await this.findTeamById(id)
-        const { ...restBefore } = team.toJSON();
-        if (team.roles.includes('onTeam')) {
-            team.roles.pop();
-        }
-        const { ...rest } = team.toJSON();
-        return this.teamModel.updateOne(restBefore, rest)
-    }
 }
