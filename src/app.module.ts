@@ -4,7 +4,6 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { TeamModule } from './team/team.module';
 import { TrialModule } from './trial/trial.module';
-import { TemporalTeamModule } from './temporal-team/temporal-team.module';
 
 @Module({
   imports: [
@@ -16,7 +15,6 @@ import { TemporalTeamModule } from './temporal-team/temporal-team.module';
     }),
     AuthModule,
     TeamModule,
-    TemporalTeamModule,
     TrialModule,
   ],
   controllers: [],
