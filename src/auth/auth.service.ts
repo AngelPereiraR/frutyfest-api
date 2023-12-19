@@ -116,7 +116,7 @@ export class AuthService {
     return rest;
   }
 
-  async update(id: string, updateAuthDto: UpdateAuthDto) {
+  async changePassword(id: string, updateAuthDto: UpdateAuthDto) {
 
     const user = await this.userModel.findById(id);
     const { password, ...userData } = updateAuthDto;
@@ -126,6 +126,24 @@ export class AuthService {
     changeUser.password = bcryptjs.hashSync(password, 10);
 
     await this.sendEmail(updateAuthDto.email, "Nuevas credenciales del registro en FrutyFest", `<h3>Bienvenid@ ${updateAuthDto.name}, tus nuevas credenciales son las siguientes:</h3>\n\n<p>Usuario: ${updateAuthDto.email}</p>\n<p>Contraseña: ${updateAuthDto.password}</p>`);
+
+    changeUser.save();
+
+    return changeUser.toJSON();
+  }
+
+  async update(id: string, updateAuthDto: UpdateAuthDto) {
+
+    const user = await this.userModel.findById(id);
+    const { password, ...userData } = updateAuthDto;
+
+    const changeUser = user;
+
+    changeUser.email = userData.email;
+    changeUser.name = userData.name;
+    changeUser.hasCompanion = userData.hasCompanion;
+    changeUser.companionName = userData.companionName;
+    changeUser.presentation = userData.presentation;
 
     changeUser.save();
 
