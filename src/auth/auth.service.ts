@@ -125,9 +125,7 @@ export class AuthService {
 
     changeUser.password = bcryptjs.hashSync(password, 10);
 
-    // await this.sendEmail(updateAuthDto.email, "Nuevas credenciales del registro en FrutyFest", `<h3>Bienvenid@ ${updateAuthDto.name}, tus nuevas credenciales son las siguientes:</h3>\n\n<p>Usuario: ${updateAuthDto.email}</p>\n<p>Contraseña: ${updateAuthDto.password}</p>`);
-
-    // updateAuthDto.password = bcryptjs.hashSync(updateAuthDto.password, 10);
+    await this.sendEmail(updateAuthDto.email, "Nuevas credenciales del registro en FrutyFest", `<h3>Bienvenid@ ${updateAuthDto.name}, tus nuevas credenciales son las siguientes:</h3>\n\n<p>Usuario: ${updateAuthDto.email}</p>\n<p>Contraseña: ${updateAuthDto.password}</p>`);
 
     changeUser.save();
 
