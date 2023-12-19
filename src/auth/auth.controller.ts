@@ -45,7 +45,6 @@ export class AuthController {
     return this.authService.findUserById(id);
   }
 
-  @UseGuards(AuthGuard)
   @Get('/email/:email')
   findOneByUser(@Param('email') email: string) {
     return this.authService.findUserByEmail(email);
