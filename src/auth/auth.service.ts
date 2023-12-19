@@ -33,11 +33,11 @@ export class AuthService {
     };
 
     await this.client
-    .send(msg)
-    .then(() => console.log('Mail sent successfully'))
-    .catch((error: any) => {
-      console.error(error);
-    });
+      .send(msg)
+      .then(() => console.log('Mail sent successfully'))
+      .catch((error: any) => {
+        console.error(error);
+      });
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
@@ -117,16 +117,21 @@ export class AuthService {
   }
 
   async update(id: string, updateAuthDto: UpdateAuthDto) {
+
     const user = await this.userModel.findById(id);
-    const { password, ...restBefore } = user.toJSON();
-    
+    const { password, ...userData } = updateAuthDto;
+
+    const changeUser = user;
+
+    changeUser.password = bcryptjs.hashSync(password, 10);
+
     // await this.sendEmail(updateAuthDto.email, "Nuevas credenciales del registro en FrutyFest", `<h3>Bienvenid@ ${updateAuthDto.name}, tus nuevas credenciales son las siguientes:</h3>\n\n<p>Usuario: ${updateAuthDto.email}</p>\n<p>Contraseña: ${updateAuthDto.password}</p>`);
-    
+
     // updateAuthDto.password = bcryptjs.hashSync(updateAuthDto.password, 10);
 
-    this.userModel.updateOne(restBefore, updateAuthDto);
+    changeUser.save();
 
-    return updateAuthDto;
+    return changeUser.toJSON();
   }
 
   async remove(id: string) {
