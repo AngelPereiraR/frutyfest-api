@@ -16,9 +16,6 @@ export class Trial {
     @Prop({ required: true, min: 1 })
     maxTeams: number;
 
-    @Prop({ required: true, min: 0 })
-    teamsAssignated: number;
-
 }
 
 export const TrialSchema = SchemaFactory.createForClass(Trial);

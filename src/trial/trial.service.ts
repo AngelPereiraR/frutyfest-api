@@ -47,22 +47,4 @@ export class TrialService {
         const Trial = (await this.findTrialById(id)).toJSON();
         return this.trialModel.deleteOne(Trial);
     }
-
-    async addTeamAssignated(id: string) {
-        const Trial = await this.findTrialById(id)
-        const { ...restBefore } = Trial.toJSON();
-        Trial.teamsAssignated += 1;
-        const { ...rest } = Trial.toJSON();
-        return this.trialModel.updateOne(restBefore, rest)
-    }
-
-    async removeTeamAssignated(id: string) {
-        const Trial = await this.findTrialById(id)
-        const { ...restBefore } = Trial.toJSON();
-        console.log(Trial.teamsAssignated);
-        Trial.teamsAssignated = Trial.teamsAssignated - 1;
-        console.log(Trial.teamsAssignated);
-        const { ...rest } = Trial.toJSON();
-        return this.trialModel.updateOne(restBefore, rest)
-    }
 }

@@ -30,14 +30,4 @@ export class TrialController {
   remove(@Param('id') id: string) {
     return this.trialService.remove(id);
   }
-
-  @Patch('/addTeamAssignated/:id')
-  addTeamAssignated(@Param('id') id: string) {
-    return this.trialService.addTeamAssignated(id);
-  }
-
-  @Patch('/removeTeamAssignated/:id')
-  removeTeamAssignated(@Param('id') id: string) {
-    return this.trialService.removeTeamAssignated(id);
-  }
 }

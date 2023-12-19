@@ -13,7 +13,4 @@ export class CreateTrialDto {
 
     @Min(1)
     maxTeams: number;
-
-    @Min(0)
-    teamsAssignated: number;
 }
