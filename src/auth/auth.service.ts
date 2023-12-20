@@ -191,10 +191,30 @@ export class AuthService {
     return this.userModel.updateOne(restBefore, rest)
   }
 
+  async setAlternate(id: string) {
+    const user = await this.userModel.findById(id);
+    const { ...restBefore } = user.toJSON();
+    if (!user.roles.includes('alternate')) {
+      user.roles.push('alternate');
+    }
+    const { password, ...rest } = user.toJSON();
+    return this.userModel.updateOne(restBefore, rest)
+  }
+
   async removeParticipant(id: string) {
     const user = await this.userModel.findById(id);
     const { ...restBefore } = user.toJSON();
     if (user.roles.includes('participant')) {
+      user.roles.pop();
+    }
+    const { password, ...rest } = user.toJSON();
+    return this.userModel.updateOne(restBefore, rest)
+  }
+
+  async removeAlternate(id: string) {
+    const user = await this.userModel.findById(id);
+    const { ...restBefore } = user.toJSON();
+    if (user.roles.includes('alternate')) {
       user.roles.pop();
     }
     const { password, ...rest } = user.toJSON();

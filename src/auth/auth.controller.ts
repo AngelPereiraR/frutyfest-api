@@ -80,6 +80,18 @@ export class AuthController {
   }
 
   @UseGuards(AuthGuard)
+  @Patch('/setAlternate/:id')
+  setAlternate(@Param('id') id: string) {
+    return this.authService.setAlternate(id);
+  }
+
+  @UseGuards(AuthGuard)
+  @Patch('/removeAlternate/:id')
+  removeAlternate(@Param('id') id: string) {
+    return this.authService.removeAlternate(id);
+  }
+
+  @UseGuards(AuthGuard)
   @Patch('/setSelectedOnTeam/:id')
   setSelectedOnTeam(@Param('id') id: string) {
     return this.authService.setSelectedOnTeam(id);
