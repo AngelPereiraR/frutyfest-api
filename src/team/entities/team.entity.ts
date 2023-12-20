@@ -15,6 +15,9 @@ export class Team {
     @Prop({ required: true })
     event: string;
 
+    @Prop({ required: true })
+    name: string;
+
     @Prop({ required: true, min: 0 })
     totalPoints: number;
 

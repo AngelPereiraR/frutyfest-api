@@ -16,6 +16,9 @@ export class CreateTeamDto {
     @IsString()
     event: string;
 
+    @IsString()
+    name: string;
+
     @Min(0)
     totalPoints: number;
 }
