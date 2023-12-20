@@ -24,6 +24,9 @@ export class User {
     companionName: string;
 
     @Prop({required: true})
+    event: string;
+
+    @Prop({required: true})
     presentation: string;
 
 }

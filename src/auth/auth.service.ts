@@ -143,6 +143,7 @@ export class AuthService {
     changeUser.name = userData.name;
     changeUser.hasCompanion = userData.hasCompanion;
     changeUser.companionName = userData.companionName;
+    changeUser.event = userData.event;
     changeUser.presentation = userData.presentation;
 
     changeUser.save();

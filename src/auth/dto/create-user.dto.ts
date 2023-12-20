@@ -12,5 +12,7 @@ export class CreateUserDto {
     @IsString()
     companionName?: string;
     @IsString()
+    event: string;
+    @IsString()
     presentation: string;
 }
