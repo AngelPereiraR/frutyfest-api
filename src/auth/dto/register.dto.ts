@@ -5,6 +5,8 @@ export class RegisterDto {
     email: string;
     @IsString()
     name: string;
+    @IsString()
+    minecraftName: string;
     @MinLength(6)
     password: string;
     @IsBoolean()

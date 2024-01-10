@@ -11,6 +11,9 @@ export class User {
     @Prop({required: true})
     name: string;
 
+    @Prop({required: true})
+    minecraftName: string;
+
     @Prop({minlength: 6, required: true})
     password?: string;
 

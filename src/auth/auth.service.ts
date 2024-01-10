@@ -141,6 +141,7 @@ export class AuthService {
 
     changeUser.email = userData.email;
     changeUser.name = userData.name;
+    changeUser.minecraftName = userData.minecraftName;
     changeUser.hasCompanion = userData.hasCompanion;
     changeUser.companionName = userData.companionName;
     changeUser.event = userData.event;
