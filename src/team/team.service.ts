@@ -1,64 +1,50 @@
-import {
-  BadRequestException,
-  Injectable,
-  InternalServerErrorException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
 import { CreateTeamDto } from './dto';
 import { UpdateTeamDto } from './dto';
 import { Team } from './entities/team.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
+
 @Injectable()
 export class TeamService {
-  constructor(
-    @InjectModel(Team.name)
-    private teamModel: Model<Team>,
-  ) {}
 
-  async create(createTeamDto: CreateTeamDto) {
-    try {
-      const newTeam = new this.teamModel({
-        ...createTeamDto,
-      });
-
-      return await newTeam.save();
-    } catch (error) {
-      if (error.code === 11000) {
-        throw new BadRequestException(`User/s already asignated!`);
-      }
-      throw new InternalServerErrorException('Something terrible happen!!!');
+    constructor(
+        @InjectModel(Team.name)
+        private teamModel: Model<Team>,) {
     }
-  }
 
-  findAll(): Promise<Team[]> {
-    return this.teamModel.find();
-  }
+    async create(createTeamDto: CreateTeamDto) {
+        try {
+            const newTeam = new this.teamModel({
+                ...createTeamDto
+            }
+            );
 
-  async findTeamById(id: string) {
-    return await this.teamModel.findById(id);
-  }
+            return await newTeam.save();
+        } catch (error) {
+            if (error.code === 11000) {
+                throw new BadRequestException(`User/s already asignated!`)
+            }
+            throw new InternalServerErrorException('Something terrible happen!!!')
+        }
+    }
 
-  async update(id: string, updateTeamDto: UpdateTeamDto) {
-    const team = await this.teamModel.findById(id);
-    const { ...teamData } = updateTeamDto;
+    findAll(): Promise<Team[]> {
+        return this.teamModel.find();
+    }
 
-    const changeTeam = team;
+    async findTeamById(id: string) {
+        return await this.teamModel.findById(id);
+    }
 
-    changeTeam.color = teamData.color;
-    changeTeam.users = teamData.users;
-    changeTeam.event = teamData.event;
-    changeTeam.name = teamData.name;
-    changeTeam.totalPoints = teamData.totalPoints;
+    async update(id: string, updateTeamDto: UpdateTeamDto) {
+        const Team = this.findTeamById(id);
+        return this.teamModel.updateOne(Team, updateTeamDto);
+    }
 
-    changeTeam.save();
-
-    return changeTeam.toJSON();
-  }
-
-  async remove(id: string) {
-    const Team = (await this.findTeamById(id)).toJSON();
-    return this.teamModel.deleteOne(Team);
-  }
+    async remove(id: string) {
+        const Team = (await this.findTeamById(id)).toJSON();
+        return this.teamModel.deleteOne(Team);
+    }
 }
