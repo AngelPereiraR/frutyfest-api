@@ -43,7 +43,7 @@ export class TeamService {
             const Team = this.findTeamById(id);
         return this.teamModel.updateOne(Team, updateTeamDto);
         } catch( error ) {
-            throw new Error(error);
+            throw new Error(error.code);
         }
     }
 
