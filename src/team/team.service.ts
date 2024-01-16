@@ -39,8 +39,12 @@ export class TeamService {
     }
 
     async update(id: string, updateTeamDto: UpdateTeamDto) {
-        const Team = this.findTeamById(id);
+        try {
+            const Team = this.findTeamById(id);
         return this.teamModel.updateOne(Team, updateTeamDto);
+        } catch( error ) {
+            throw new Error(error);
+        }
     }
 
     async remove(id: string) {
