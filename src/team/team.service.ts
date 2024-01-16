@@ -48,6 +48,8 @@ export class TeamService {
 
     changeTeam.totalPoints = teamData.totalPoints;
 
+    console.log(changeTeam.toJSON())
+
     changeTeam.save();
 
     return changeTeam.toJSON();
