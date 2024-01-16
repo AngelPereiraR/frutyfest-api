@@ -1,4 +1,4 @@
-import { IsString, Min } from "class-validator";
+import { IsBoolean, IsString, Min } from "class-validator";
 
 export class CreateTrialDto {
 
@@ -13,4 +13,16 @@ export class CreateTrialDto {
 
     @Min(1)
     maxTeams: number;
+
+    @Min(1)
+    phase: number;
+
+    @IsBoolean()
+    rated: boolean;
+
+    @IsBoolean()
+    beginningPhase: boolean;
+
+    @IsBoolean()
+    endingPhase: boolean;
 }

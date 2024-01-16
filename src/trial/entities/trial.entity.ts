@@ -16,6 +16,18 @@ export class Trial {
     @Prop({ required: true, min: 1 })
     maxTeams: number;
 
+    @Prop({ required: true, min: 1 })
+    phase: number;
+
+    @Prop({ required: true, default: false })
+    rated: boolean;
+
+    @Prop({ required: true, default: false })
+    beginningPhase: boolean;
+
+    @Prop({ required: true, default: false })
+    endingPhase: boolean;
+
 }
 
 export const TrialSchema = SchemaFactory.createForClass(Trial);
