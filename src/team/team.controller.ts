@@ -21,7 +21,7 @@ export class TeamController {
     return this.teamService.findTeamById(id);
   }
 
-  @Patch(':id')
+  @Patch('/prueba/:id')
   update(@Param('id') id: string, @Body() updateteamDto: UpdateTeamDto) {
     return this.teamService.update(id, updateteamDto);
   }
