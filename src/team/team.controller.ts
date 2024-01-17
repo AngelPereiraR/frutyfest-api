@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Request } from '@nestjs/common';
 import { TeamService } from './team.service';
 import { CreateTeamDto, UpdateTeamDto } from './dto';
 
@@ -31,27 +31,27 @@ export class TeamController {
     return this.teamService.remove(id);
   }
 
-  @Put('/setEliminatedPhase1/:id')
+  @Patch('/setEliminatedPhase1/:id')
   setEliminatedPhase1(@Param('id') id: string) {
     return this.teamService.setEliminatedPhase1(id);
   }
 
-  @Put('/setEliminatedPhase2/:id')
+  @Patch('/setEliminatedPhase2/:id')
   setEliminatedPhase2(@Param('id') id: string) {
     return this.teamService.setEliminatedPhase2(id);
   }
 
-  @Put('/setEliminatedPhase3/:id')
+  @Patch('/setEliminatedPhase3/:id')
   setEliminatedPhase3(@Param('id') id: string) {
     return this.teamService.setEliminatedPhase3(id);
   }
 
-  @Put('/setEliminatedPhase4/:id')
+  @Patch('/setEliminatedPhase4/:id')
   setEliminatedPhase4(@Param('id') id: string) {
     return this.teamService.setEliminatedPhase4(id);
   }
 
-  @Put('/setWinner/:id')
+  @Patch('/setWinner/:id')
   setWinner(@Param('id') id: string) {
     return this.teamService.setWinner(id);
   }
