@@ -21,4 +21,8 @@ export class CreateTeamDto {
 
     @Min(0)
     totalPoints: number;
+
+    @IsArray()
+    @ArrayMinSize(0)
+    roles: string[];
 }
