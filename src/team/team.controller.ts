@@ -30,4 +30,29 @@ export class TeamController {
   remove(@Param('id') id: string) {
     return this.teamService.remove(id);
   }
+
+  @Patch('/setEliminatedPhase1/:id')
+  setEliminatedPhase1(@Param('id') id: string) {
+    return this.teamService.setEliminatedPhase1(id);
+  }
+
+  @Patch('/setEliminatedPhase2/:id')
+  setEliminatedPhase2(@Param('id') id: string) {
+    return this.teamService.setEliminatedPhase2(id);
+  }
+
+  @Patch('/setEliminatedPhase3/:id')
+  setEliminatedPhase3(@Param('id') id: string) {
+    return this.teamService.setEliminatedPhase3(id);
+  }
+
+  @Patch('/setEliminatedPhase4/:id')
+  setEliminatedPhase4(@Param('id') id: string) {
+    return this.teamService.setEliminatedPhase4(id);
+  }
+
+  @Patch('/setWinner/:id')
+  setWinner(@Param('id') id: string) {
+    return this.teamService.setWinner(id);
+  }
 }

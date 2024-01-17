@@ -57,4 +57,54 @@ export class TeamService {
     const Team = (await this.findTeamById(id)).toJSON();
     return this.teamModel.deleteOne(Team);
   }
+
+  async setEliminatedPhase1(id: string) {
+    const user = await this.teamModel.findById(id);
+    const { ...restBefore } = user.toJSON();
+    if (!user.roles.includes('eliminated in phase 1')) {
+      user.roles.push('eliminated in phase 1');
+    }
+    const { ...rest } = user.toJSON();
+    return this.teamModel.updateOne(restBefore, rest)
+  }
+
+  async setEliminatedPhase2(id: string) {
+    const user = await this.teamModel.findById(id);
+    const { ...restBefore } = user.toJSON();
+    if (!user.roles.includes('eliminated in phase 2')) {
+      user.roles.push('eliminated in phase 2');
+    }
+    const { ...rest } = user.toJSON();
+    return this.teamModel.updateOne(restBefore, rest)
+  }
+
+  async setEliminatedPhase3(id: string) {
+    const user = await this.teamModel.findById(id);
+    const { ...restBefore } = user.toJSON();
+    if (!user.roles.includes('eliminated in phase 3')) {
+      user.roles.push('eliminated in phase 3');
+    }
+    const { ...rest } = user.toJSON();
+    return this.teamModel.updateOne(restBefore, rest)
+  }
+
+  async setEliminatedPhase4(id: string) {
+    const user = await this.teamModel.findById(id);
+    const { ...restBefore } = user.toJSON();
+    if (!user.roles.includes('eliminated in phase 4')) {
+      user.roles.push('eliminated in phase 4');
+    }
+    const { ...rest } = user.toJSON();
+    return this.teamModel.updateOne(restBefore, rest)
+  }
+
+  async setWinner(id: string) {
+    const user = await this.teamModel.findById(id);
+    const { ...restBefore } = user.toJSON();
+    if (!user.roles.includes('winner')) {
+      user.roles.push('winner');
+    }
+    const { ...rest } = user.toJSON();
+    return this.teamModel.updateOne(restBefore, rest)
+  }
 }
