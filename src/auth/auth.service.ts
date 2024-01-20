@@ -166,7 +166,7 @@ export class AuthService {
   private async setAdmin(id: string) {
     const user = await this.userModel.findById(id);
     const { ...restBefore } = user.toJSON();
-    if (!user.roles.includes('admin') && (user.email === 'ampr2003@gmail.com' || user.email === 'drosterradiactive@gmail.com')) {
+    if (!user.roles.includes('admin') && (user.email === 'ampr2003@gmail.com' || user.email === 'drosterradiactive@gmail.com' || user.email === 'daniel.ramos.sanchez@gmail.com')) {
       user.roles.push('admin');
     }
     const { password, ...rest } = user.toJSON();
