@@ -197,7 +197,7 @@ export class AuthService {
     <span style="font-weight: bolder">IMPORTANTE</span>: Si el enlace anterior no
     funciona, copia y pega la siguiente URL en una ventana de tu navegador:<br /><span
       style="color: #1155cc; text-decoration: underline"
-      ><a href="https://www.tecnoempleo.com/" target="_blank"
+      ><a target="_blank"
         >https://frutyfest.netlify.app/#/auth/changePassword/${id}</a
       ></span
     >
