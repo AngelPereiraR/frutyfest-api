@@ -165,17 +165,16 @@ export class AuthService {
   <a
     href="https://frutyfest.netlify.app/#/auth/changePassword/${id}"
     style="
-      display: inline-block;
       color: #ffffff;
       background-color: #3498db;
       border: solid 2px #3498db;
       border-radius: 4px;
-      box-sizing: border-box;
       text-decoration: none;
       font-weight: bold;
-      margin: 0;
+      margin: 0 auto;
       padding: 12px 24px;
       border-color: #3498db;
+      text-align: center;
       width: 300px;
     "
     target="_blank"
