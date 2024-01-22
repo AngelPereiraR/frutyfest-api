@@ -39,7 +39,6 @@ export class AuthController {
 
   }
 
-  @UseGuards(AuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.authService.findUserById(id);
