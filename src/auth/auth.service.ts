@@ -132,6 +132,13 @@ export class AuthService {
     return changeUser.toJSON();
   }
 
+  async recoverPassword(id: string) {
+
+    const user = await this.userModel.findById(id);
+
+    await this.sendEmail(user.email, "Recuperación de credenciales", `<h3>Bienvenid@ ${user.name}, tus credenciales eran las siguientes:</h3>\n\n<p>Usuario: ${user.email}</p>\n<p>Contraseña: ${user.password}</p>`);
+  }
+
   async update(id: string, updateAuthDto: UpdateAuthDto) {
 
     const user = await this.userModel.findById(id);

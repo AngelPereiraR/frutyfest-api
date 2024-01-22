@@ -45,6 +45,11 @@ export class AuthController {
     return this.authService.findUserById(id);
   }
 
+  @Get('/recoverPassword/:id')
+  recoverPassword(@Param('id') id: string) {
+    return this.authService.recoverPassword(id);
+  }
+
   @Get('/email/:email')
   findOneByUser(@Param('email') email: string) {
     return this.authService.findUserByEmail(email);
