@@ -155,7 +155,7 @@ export class AuthService {
       `<h3
     style="
       margin: 0;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     "
   >
     Bienvenid@ ${user.name}, si desea cambiar a una <b>nueva contraseña</b> para tu cuenta pulsa en el siguiente
@@ -171,6 +171,7 @@ export class AuthService {
       text-decoration: none;
       font-weight: bold;
       margin: 0 auto;
+      margin-bottom: 20px;
       padding: 12px 24px;
       border-color: #3498db;
       text-align: center;
@@ -184,7 +185,7 @@ export class AuthService {
       font-size: 13px;
       font-weight: normal;
       margin-top: 10px;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
       color: #999999;
     "
   >
@@ -196,7 +197,7 @@ export class AuthService {
       ></span
     >
   </p>
-  <p style="font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 16px;">
+  <p style="font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 20px;">
     Recuerda que tu email de acceso es:
     <span
     style="
