@@ -156,21 +156,21 @@ export class AuthService {
     style="
       margin: 0;
       margin-bottom: 10px;
-      text-align: center;
     "
   >
     Bienvenid@ ${user.name}, si desea cambiar a una <b>nueva contraseña</b> para tu cuenta pulsa en el siguiente
     enlace:
   </h3>
-  <p
+  <a
     href="https://frutyfest.netlify.app/#/auth/changePassword/${id}"
     style="
       color: #ffffff;
       background-color: #3498db;
       border: solid 2px #3498db;
       border-radius: 4px;
+      text-decoration: none;
       font-weight: bold;
-      margin: 0;
+      margin: 0 auto;
       padding: 12px 24px;
       border-color: #3498db;
       text-align: center;
@@ -178,7 +178,7 @@ export class AuthService {
     "
     target="_blank"
     >Cambiar contraseña
-  </p>
+  </a>
   <p
     style="
       font-size: 13px;
@@ -186,7 +186,6 @@ export class AuthService {
       margin-top: 10px;
       margin-bottom: 16px;
       color: #999999;
-      text-align: center;
     "
   >
     <span style="font-weight: bolder">IMPORTANTE</span>: Si el enlace anterior no
@@ -197,7 +196,7 @@ export class AuthService {
       ></span
     >
   </p>
-  <p style="font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 16px; text-align: center;">
+  <p style="font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 16px;">
     Recuerda que tu email de acceso es:
     <span
     style="
