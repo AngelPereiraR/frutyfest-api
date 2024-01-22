@@ -148,7 +148,6 @@ export class AuthService {
   async recoverPassword(id: string) {
     const user = await this.userModel.findById(id);
 
-    //TODO: Meter botón para llevar al enlace de cambio
     await this.sendEmail(
       user.email,
       'Recuperación de credenciales',
