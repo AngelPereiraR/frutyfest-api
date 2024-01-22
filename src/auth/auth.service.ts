@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable, InternalServerErrorException, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './entities/user.entity';
 import { Model } from 'mongoose';
@@ -11,7 +16,7 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthService {
-  private client = require("@sendgrid/mail");
+  private client = require('@sendgrid/mail');
   private readonly apiKey: string;
 
   constructor(
@@ -24,7 +29,11 @@ export class AuthService {
     this.client.setApiKey(this.apiKey);
   }
 
-  async sendEmail(to: string, subject: string, htmlContent: string): Promise<void> {
+  async sendEmail(
+    to: string,
+    subject: string,
+    htmlContent: string,
+  ): Promise<void> {
     const msg = {
       to,
       from: `FrutyFest <${process.env.USER}>`,
@@ -41,27 +50,28 @@ export class AuthService {
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-
     try {
       const { password, ...userData } = createUserDto;
 
       const newUser = new this.userModel({
         password: bcryptjs.hashSync(password, 10),
-        ...userData
-      }
-      );
+        ...userData,
+      });
 
-      await this.sendEmail(userData.email, "Credenciales del registro en FrutyFest", `<h3>Bienvenid@ ${userData.name}, tus credenciales son las siguientes:</h3>\n\n<p>Usuario: ${userData.email}</p>\n<p>Contraseña: ${password}</p>\n\n\n<p>Estás pendiente de ser seleccionado como uno de los participantes del FrutyFest</p>`);
+      await this.sendEmail(
+        userData.email,
+        'Credenciales del registro en FrutyFest',
+        `<h3>Bienvenid@ ${userData.name}, tus credenciales son las siguientes:</h3>\n\n<p>Usuario: ${userData.email}</p>\n<p>Contraseña: ${password}</p>\n\n\n<p>Estás pendiente de ser seleccionado como uno de los participantes del FrutyFest</p>`,
+      );
       await newUser.save();
       const { password: _, ...user } = newUser.toJSON();
-
 
       return user;
     } catch (error) {
       if (error.code === 11000) {
-        throw new BadRequestException(`${createUserDto.email} already exists!`)
+        throw new BadRequestException(`${createUserDto.email} already exists!`);
       }
-      throw new InternalServerErrorException('Something terrible happen!!!')
+      throw new InternalServerErrorException('Something terrible happen!!!');
     }
   }
 
@@ -70,8 +80,8 @@ export class AuthService {
     await this.setAdmin(user._id);
     return {
       user: user,
-      token: this.getJwtToken({ id: user._id })
-    }
+      token: this.getJwtToken({ id: user._id }),
+    };
   }
 
   async login(loginDto: LoginDto): Promise<LoginResponse> {
@@ -92,7 +102,7 @@ export class AuthService {
     return {
       user: rest,
       token: this.getJwtToken({ id: user.id }),
-    }
+    };
 
     /**
      * User { _id, name, email, roles }
@@ -117,7 +127,6 @@ export class AuthService {
   }
 
   async changePassword(id: string, updateAuthDto: UpdateAuthDto) {
-
     const user = await this.userModel.findById(id);
     const { password, ...userData } = updateAuthDto;
 
@@ -125,7 +134,11 @@ export class AuthService {
 
     changeUser.password = bcryptjs.hashSync(password, 10);
 
-    await this.sendEmail(updateAuthDto.email, "Nuevas credenciales del registro en FrutyFest", `<h3>Bienvenid@ ${updateAuthDto.name}, tus nuevas credenciales son las siguientes:</h3>\n\n<p>Usuario: ${updateAuthDto.email}</p>\n<p>Contraseña: ${updateAuthDto.password}</p>`);
+    await this.sendEmail(
+      updateAuthDto.email,
+      'Nuevas credenciales del registro en FrutyFest',
+      `<h3>Bienvenid@ ${updateAuthDto.name}, tus nuevas credenciales son las siguientes:</h3>\n\n<p>Usuario: ${updateAuthDto.email}</p>\n<p>Contraseña: ${updateAuthDto.password}</p>`,
+    );
 
     changeUser.save();
 
@@ -133,14 +146,72 @@ export class AuthService {
   }
 
   async recoverPassword(id: string) {
-
     const user = await this.userModel.findById(id);
 
-    await this.sendEmail(user.email, "Recuperación de credenciales", `<h3>Bienvenid@ ${user.name}, tus credenciales eran las siguientes:</h3>\n\n<p>Usuario: ${user.email}</p>\n<p>Contraseña: ${user.password}</p>`);
+    //TODO: Meter botón para llevar al enlace de cambio
+    await this.sendEmail(
+      user.email,
+      'Recuperación de credenciales',
+      `<p
+    style="
+      font-size: 14px;
+      font-weight: normal;
+      margin: 0;
+      margin-bottom: 10px;
+      text-align: center;
+    "
+  >
+    Bienvenid@ ${user.name}, si desea cambiar a una <b>nueva contraseña</b> para tu cuenta pulsa en el siguiente
+    enlace:
+  </p>
+  <a
+    href="https://frutyfest.netlify.app/#/auth/changePassword/${id}"
+    style="
+      display: inline-block;
+      color: #ffffff;
+      background-color: #3498db;
+      border: solid 2px #3498db;
+      border-radius: 4px;
+      box-sizing: border-box;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: bold;
+      margin: 0;
+      padding: 12px 24px;
+      border-color: #3498db;
+    "
+    target="_blank"
+    >Generar nueva contraseña
+  </a>
+  <p
+    style="
+      font-size: 13px;
+      font-weight: normal;
+      margin-top: 10px;
+      margin-bottom: 16px;
+      color: #999999;
+    "
+  >
+    <span style="font-weight: bolder">IMPORTANTE</span>: Si el enlace anterior no
+    funciona, copia y pega la siguiente URL en una ventana de tu navegador:<br /><span
+      style="color: #1155cc; text-decoration: underline"
+      ><a href="https://www.tecnoempleo.com/" target="_blank"
+        >https://frutyfest.netlify.app/#/auth/changePassword/${id}</a
+      ></span
+    >
+  </p>
+  <p style="font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 16px">
+    Recuerda que tu email de acceso es:
+    <span style="font-weight: bolder"
+      ><a href="mailto:ampr2003@gmail.com" target="_blank"
+        >ampr2003@gmail.com</a
+      ></span
+    >
+  </p>`,
+    );
   }
 
   async update(id: string, updateAuthDto: UpdateAuthDto) {
-
     const user = await this.userModel.findById(id);
     const { password, ...userData } = updateAuthDto;
 
@@ -166,18 +237,23 @@ export class AuthService {
   }
 
   getJwtToken(payload: JwtPayload) {
-    const token = this.jwtService.sign(payload, {expiresIn: '1 hour'});
+    const token = this.jwtService.sign(payload, { expiresIn: '1 hour' });
     return token;
   }
 
   private async setAdmin(id: string) {
     const user = await this.userModel.findById(id);
     const { ...restBefore } = user.toJSON();
-    if (!user.roles.includes('admin') && (user.email === 'ampr2003@gmail.com' || user.email === 'pmcortado2000@gmail.com' || user.email === 'daniel.ramos.sanchez@gmail.com')) {
+    if (
+      !user.roles.includes('admin') &&
+      (user.email === 'ampr2003@gmail.com' ||
+        user.email === 'pmcortado2000@gmail.com' ||
+        user.email === 'daniel.ramos.sanchez@gmail.com')
+    ) {
       user.roles.push('admin');
     }
     const { password, ...rest } = user.toJSON();
-    return this.userModel.updateOne(restBefore, rest)
+    return this.userModel.updateOne(restBefore, rest);
   }
 
   async setParticipant(id: string) {
@@ -187,7 +263,7 @@ export class AuthService {
       user.roles.push('participant');
     }
     const { password, ...rest } = user.toJSON();
-    return this.userModel.updateOne(restBefore, rest)
+    return this.userModel.updateOne(restBefore, rest);
   }
 
   async setSelectedOnTeam(id: string) {
@@ -197,7 +273,7 @@ export class AuthService {
       user.roles.push('onTeam');
     }
     const { password, ...rest } = user.toJSON();
-    return this.userModel.updateOne(restBefore, rest)
+    return this.userModel.updateOne(restBefore, rest);
   }
 
   async setAlternate(id: string) {
@@ -207,7 +283,7 @@ export class AuthService {
       user.roles.push('alternate');
     }
     const { password, ...rest } = user.toJSON();
-    return this.userModel.updateOne(restBefore, rest)
+    return this.userModel.updateOne(restBefore, rest);
   }
 
   async removeParticipant(id: string) {
@@ -217,7 +293,7 @@ export class AuthService {
       user.roles.pop();
     }
     const { password, ...rest } = user.toJSON();
-    return this.userModel.updateOne(restBefore, rest)
+    return this.userModel.updateOne(restBefore, rest);
   }
 
   async removeAlternate(id: string) {
@@ -227,7 +303,7 @@ export class AuthService {
       user.roles.pop();
     }
     const { password, ...rest } = user.toJSON();
-    return this.userModel.updateOne(restBefore, rest)
+    return this.userModel.updateOne(restBefore, rest);
   }
 
   async removeSelectedOnTeam(id: string) {
@@ -237,6 +313,6 @@ export class AuthService {
       user.roles.pop();
     }
     const { password, ...rest } = user.toJSON();
-    return this.userModel.updateOne(restBefore, rest)
+    return this.userModel.updateOne(restBefore, rest);
   }
 }
