@@ -152,7 +152,7 @@ export class AuthService {
     await this.sendEmail(
       user.email,
       'Recuperación de credenciales',
-      `<p
+      `<h3
     style="
       font-size: 14px;
       font-weight: normal;
@@ -163,7 +163,7 @@ export class AuthService {
   >
     Bienvenid@ ${user.name}, si desea cambiar a una <b>nueva contraseña</b> para tu cuenta pulsa en el siguiente
     enlace:
-  </p>
+  </h3>
   <a
     href="https://frutyfest.netlify.app/#/auth/changePassword/${id}"
     style="
@@ -179,6 +179,7 @@ export class AuthService {
       margin: 0;
       padding: 12px 24px;
       border-color: #3498db;
+      text-align: center;
     "
     target="_blank"
     >Generar nueva contraseña
@@ -190,6 +191,7 @@ export class AuthService {
       margin-top: 10px;
       margin-bottom: 16px;
       color: #999999;
+      text-align: center;
     "
   >
     <span style="font-weight: bolder">IMPORTANTE</span>: Si el enlace anterior no
@@ -202,7 +204,11 @@ export class AuthService {
   </p>
   <p style="font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 16px">
     Recuerda que tu email de acceso es:
-    <span style="font-weight: bolder"
+    <span
+    style="
+      font-weight: bolder;
+      text-align: center;
+    "
       ><a href="mailto:ampr2003@gmail.com" target="_blank"
         >ampr2003@gmail.com</a
       ></span
