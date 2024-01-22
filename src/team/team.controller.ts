@@ -51,6 +51,11 @@ export class TeamController {
     return this.teamService.setEliminatedPhase4(id);
   }
 
+  @Patch('/setEliminatedPhase5/:id')
+  setEliminatedPhase5(@Param('id') id: string) {
+    return this.teamService.setEliminatedPhase5(id);
+  }
+
   @Patch('/setWinner/:id')
   setWinner(@Param('id') id: string) {
     return this.teamService.setWinner(id);

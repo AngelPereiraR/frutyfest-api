@@ -98,6 +98,16 @@ export class TeamService {
     return this.teamModel.updateOne(restBefore, rest)
   }
 
+  async setEliminatedPhase5(id: string) {
+    const team = await this.teamModel.findById(id);
+    const { ...restBefore } = team.toJSON();
+    if (!team.roles.includes('eliminated in phase 5')) {
+      team.roles.push('eliminated in phase 5');
+    }
+    const { ...rest } = team.toJSON();
+    return this.teamModel.updateOne(restBefore, rest)
+  }
+
   async setWinner(id: string) {
     const team = await this.teamModel.findById(id);
     const { ...restBefore } = team.toJSON();
