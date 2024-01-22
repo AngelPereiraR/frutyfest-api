@@ -167,7 +167,6 @@ export class AuthService {
   <a
     href="https://frutyfest.netlify.app/#/auth/changePassword/${id}"
     style="
-      display: inline-block;
       color: #ffffff;
       background-color: #3498db;
       border: solid 2px #3498db;
@@ -202,12 +201,11 @@ export class AuthService {
       ></span
     >
   </p>
-  <p style="font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 16px">
+  <p style="font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 16px; text-align: center;">
     Recuerda que tu email de acceso es:
     <span
     style="
       font-weight: bolder;
-      text-align: center;
     "
       ><a href="mailto:ampr2003@gmail.com" target="_blank"
         >ampr2003@gmail.com</a
