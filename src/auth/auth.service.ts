@@ -184,7 +184,7 @@ export class AuthService {
     style="
       font-size: 13px;
       font-weight: normal;
-      margin-top: 10px;
+      padding-top: 10px;
       margin-bottom: 20px;
       color: #999999;
     "
