@@ -60,8 +60,19 @@ export class AuthService {
 
       await this.sendEmail(
         userData.email,
-        'Credenciales del registro en FrutyFest',
-        `<h3>Bienvenid@ ${userData.name}, tus credenciales son las siguientes:</h3>\n\n<p>Usuario: ${userData.email}</p>\n<p>Contraseña: ${password}</p>\n\n\n<p>Estás pendiente de ser seleccionado como uno de los participantes del FrutyFest</p>`,
+        'Registro completado',
+        `<h3>Bienvenid@ ${userData.name}, su registro se ha realizado con éxito.</h3>
+        <p style="font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 20px;">
+          Recuerda que tu email de acceso es:
+          <span
+          style="
+            font-weight: bolder;
+          "
+            ><a href="mailto:${userData.email}" target="_blank"
+              >${userData.email}</a
+            ></span
+          >
+        </p>`,
       );
       await newUser.save();
       const { password: _, ...user } = newUser.toJSON();
@@ -136,8 +147,19 @@ export class AuthService {
 
     await this.sendEmail(
       updateAuthDto.email,
-      'Nuevas credenciales del registro en FrutyFest',
-      `<h3>Bienvenid@ ${updateAuthDto.name}, tus nuevas credenciales son las siguientes:</h3>\n\n<p>Usuario: ${updateAuthDto.email}</p>\n<p>Contraseña: ${updateAuthDto.password}</p>`,
+      'Cambio de contraseña realizado con éxito',
+      `<h3>Bienvenid@ ${updateAuthDto.name}, se ha realizado con éxito el cambio de credenciales.</h3>
+        <p style="font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 20px;">
+          Recuerda que tu email de acceso es:
+          <span
+          style="
+            font-weight: bolder;
+          "
+            ><a href="mailto:${updateAuthDto.email}" target="_blank"
+              >${updateAuthDto.email}</a
+            ></span
+          >
+        </p>`,
     );
 
     changeUser.save();
@@ -202,8 +224,8 @@ export class AuthService {
     style="
       font-weight: bolder;
     "
-      ><a href="mailto:ampr2003@gmail.com" target="_blank"
-        >ampr2003@gmail.com</a
+      ><a href="mailto:${user.email}" target="_blank"
+        >${user.email}</a
       ></span
     >
   </p>`,
