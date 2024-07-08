@@ -290,8 +290,8 @@ export class AuthService {
   async setSelectedOnTeam(id: string) {
     const user = await this.userModel.findById(id);
     const { ...restBefore } = user.toJSON();
-    if (!user.roles.includes('onTeam')) {
-      user.roles.push('onTeam');
+    if (!user.roles.includes('onTeamFF3')) {
+      user.roles.push('onTeamFF3');
     }
     const { password, ...rest } = user.toJSON();
     return this.userModel.updateOne(restBefore, rest);
@@ -330,7 +330,7 @@ export class AuthService {
   async removeSelectedOnTeam(id: string) {
     const user = await this.userModel.findById(id);
     const { ...restBefore } = user.toJSON();
-    if (user.roles.includes('onTeam')) {
+    if (user.roles.includes('onTeamFF3')) {
       user.roles.pop();
     }
     const { password, ...rest } = user.toJSON();
